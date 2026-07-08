@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROYAL QUOTEX ACADEMY</title>
+
+    <!-- Professional Meta Tags for Link Preview (WhatsApp, Telegram, FB) -->
+    <meta name="description" content="Join ROYAL QUOTEX ACADEMY. Get premium trading insights, official support, and access to our exclusive VIP Trading Bot. Start your professional journey today.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp / Telegram Preview Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ROYAL QUOTEX ACADEMY">
+    <meta property="og:description" content="Join ROYAL QUOTEX ACADEMY. Get premium trading insights, official support, and access to our exclusive VIP Trading Bot. Start your professional journey today.">
+    <meta property="og:image" content="dp.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Preview Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ROYAL QUOTEX ACADEMY">
+    <meta name="twitter:description" content="Join ROYAL QUOTEX ACADEMY. Get premium trading insights, official support, and access to our exclusive VIP Trading Bot. Start your professional journey today.">
+    <meta name="twitter:image" content="dp.png">
+
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS Library for advanced smooth animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --telegram-blue: #24A1DE;
+            --telegram-dark: #17212B;
+            --telegram-light: #2B5278;
+        }
+        body {
+            background: linear-gradient(135deg, #0e1621 0%, #17212b 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        /* Custom Neon Glow Effect */
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(36, 161, 222, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 35px rgba(36, 161, 222, 0.6);
+            transform: translateY(-4px) scale(1.02);
+        }
+        /* Background Animated Waves */
+        .bg-animated {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.05;
+        }
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2324A1DE" fill-opacity="1" d="M0,224L120,202.7C240,181,480,139,720,138.7C960,139,1200,181,1320,202.7L1440,224L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>') repeat-x;
+            animation: waveMotion 20s linear infinite;
+        }
+        @keyframes waveMotion {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col justify-between relative antialiased selection:bg-sky-500">
+
+    <!-- Animated Background Grid & Waves -->
+    <div class="bg-animated pointer-events-none">
+        <div class="wave"></div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-12 relative z-10">
+        <div class="w-full max-w-md text-center">
+            
+            <!-- Academy Title -->
+            <h1 data-aos="fade-down" data-aos-duration="1000" class="text-3xl md:text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-sky-200 uppercase mb-8">
+                ROYAL QUOTEX ACADEMY
+            </h1>
+
+            <!-- Logo Section -->
+            <div data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200" class="mb-8 flex justify-center">
+                <div class="relative p-1 rounded-full bg-gradient-to-b from-sky-400 to-transparent shadow-2xl">
+                    <img src="logo.png" alt="Royal Quotex Academy Logo" class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover bg-slate-900 border-4 border-slate-950">
+                </div>
+            </div>
+
+            <!-- Contact Text -->
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" class="mb-10">
+                <h2 class="text-lg md:text-xl font-medium tracking-wide uppercase text-sky-400">
+                    Contact with Us
+                </h2>
+                <div class="w-16 h-1 bg-sky-500 mx-auto mt-3 rounded-full opacity-75"></div>
+            </div>
+
+            <!-- Action Buttons (With Pakistan Telegram Bypass Logic & Live Links) -->
+            <div class="space-y-4 md:space-y-5 px-2">
+                
+                <!-- Button 1: Telegram Channel -->
+                <button onclick="openTelegram('https://t.me/+HMHyV4Szl-BhZjc0', 'tg://join?invite=HMHyV4Szl-BhZjc0')" 
+                        data-aos="fade-up" data-aos-duration="800" data-aos-delay="600"
+                        class="glow-effect w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#24A1DE] to-[#1d82b3] font-semibold text-sm md:text-base tracking-wider uppercase flex items-center justify-center border border-sky-400/20 cursor-pointer">
+                    Telegram Channel
+                </button>
+
+                <!-- Button 2: Telegram Contact -->
+                <button onclick="openTelegram('https://t.me/rqa_official', 'tg://resolve?domain=rqa_official')" 
+                        data-aos="fade-up" data-aos-duration="800" data-aos-delay="700"
+                        class="glow-effect w-full py-4 px-6 rounded-xl bg-slate-800/80 hover:bg-slate-800 font-semibold text-sm md:text-base tracking-wider uppercase flex items-center justify-center border border-slate-700 hover:border-sky-500/50 cursor-pointer">
+                    Telegram Contact
+                </button>
+
+                <!-- Button 3: VIP Join Bot -->
+                <button onclick="openTelegram('https://t.me/RQA_PRO_VIP_BOT', 'tg://resolve?domain=RQA_PRO_VIP_BOT')" 
+                        data-aos="fade-up" data-aos-duration="800" data-aos-delay="800"
+                        class="glow-effect w-full py-4 px-6 rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 hover:from-sky-950 hover:to-slate-900 font-semibold text-sm md:text-base tracking-wider uppercase flex items-center justify-center border border-sky-500/30 text-sky-400 cursor-pointer">
+                    VIP Join Bot
+                </button>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 text-xs tracking-widest uppercase text-slate-500 relative z-10 border-t border-slate-900">
+        &copy; 2026 ROYAL QUOTEX ACADEMY. All Rights Reserved.
+    </footer>
+
+    <!-- AOS Animation Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Animations
+        AOS.init({
+            once: true,
+            mirror: false
+        });
+
+        /**
+         * Smart Pakistan Telegram Bypass Protocol
+         * Pehle yeh mobile application protocol (tg://) ko execute karne ki koshish karega.
+         * Agar user ke paas app hogi to direct redirect ho jayega bina block hue.
+         * Backup ke tor par yeh system deep link webview use karta hai.
+         */
+        function openTelegram(webUrl, appUrl) {
+            setTimeout(function() {
+                // Try opening with native protocol first (Bypasses local ISP blocks if app is installed)
+                window.location.href = appUrl;
+                
+                // Fallback mechanism if protocol fails after a brief moment
+                setTimeout(function() {
+                    window.open(webUrl, '_blank');
+                }, 500);
+            }, 150);
+        }
+    </script>
+</body>
+</html>
