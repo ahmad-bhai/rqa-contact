@@ -1,17 +1,16 @@
 export default async function handler(req, res) {
-    // 1. Full CORS Headers Setup
+    // 1. Full CORS & Content Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
-    // Preflight OPTIONS Request Handle karna
     if (req.method === 'OPTIONS') {  
         return res.status(200).end();  
     }  
 
     try {  
-        // 2. Safely Extract ID from Query Parameters
+        // 2. Safely Extract ID
         let incomingId = null;
         if (req.query && req.query.id) {
             incomingId = req.query.id;
@@ -61,6 +60,7 @@ export default async function handler(req, res) {
         let userKey = null;
         let userData = null;
 
+        // Find Current User
         if (allUsers) {  
             for (let key in allUsers) {  
                 if (allUsers[key] && String(allUsers[key].id).trim() === incomingId) {  
@@ -71,27 +71,53 @@ export default async function handler(req, res) {
             }  
         }
 
-        // 🚨 5. SECURITY CHECK: AGAR IP/DEVICE UNKNOWN HO YA BOT HO TO USER DELETE KARO
+        // 🚨 5. SECURITY CHECK 1: UNKNOWN IP / DEVICE / BOT BLOCK & DELETE
         if (isUnknownIP || isUnknownDevice || isBotOrCurl) {
             if (userKey) {
-                // Firebase se User PERMANENT DELETE kar do
-                await fetch(`${firebaseBaseURL}/users/${userKey}.json`, {
-                    method: 'DELETE'
-                });
+                await fetch(`${firebaseBaseURL}/users/${userKey}.json`, { method: 'DELETE' });
             }
-            // Block response
             return res.status(200).send("LOCKED_SECURITY_VIOLATION");
         }
 
-        // Agar user database mein exist hi nahi karta
+        // 🚨 6. SECURITY CHECK 2: MULTI-ACCOUNT PER IP DETECTION (1 IP = 1 ID)
+        if (allUsers && clientIp && !isUnknownIP) {
+            const usersWithSameIP = [];
+
+            for (let key in allUsers) {
+                const u = allUsers[key];
+                if (!u) continue;
+
+                let userLogs = [];
+                if (u.logs && typeof u.logs === 'object') {
+                    userLogs = Array.isArray(u.logs) ? u.logs : Object.values(u.logs);
+                }
+
+                const lastLogIP = userLogs[0]?.ip || u.lastIp;
+                
+                if (lastLogIP === clientIp) {
+                    usersWithSameIP.push({ key, id: u.id });
+                }
+            }
+
+            const uniqueIdsForIP = new Set(usersWithSameIP.map(item => item.id));
+            
+            if (uniqueIdsForIP.size > 1) {
+                // Delete all violating accounts on same IP
+                for (let item of usersWithSameIP) {
+                    await fetch(`${firebaseBaseURL}/users/${item.key}.json`, { method: 'DELETE' });
+                }
+                return res.status(200).send("LOCKED_MULTIPLE_ACCOUNTS_DETECTED");
+            }
+        }
+
+        // User does not exist in DB
         if (!userData || !userKey) {
             return res.status(200).send(incomingId);
         }
 
-        // Active / Unlocked Status Check
         const isUnlocked = userData.status === "active";
 
-        // 6. LOGS CREATION & ROTATION (5 Logs Object Format)
+        // 7. LOGS & ENHANCED ADMIN TRACKING UPDATE
         const now = new Date();
         const currentLog = {
             timestamp: now.toISOString(),
@@ -107,18 +133,25 @@ export default async function handler(req, res) {
             existingLogs = Array.isArray(userData.logs) ? userData.logs : Object.values(userData.logs);
         }
 
-        // Latest log sabse aage add karo aur last 5 maintain karo
         existingLogs.unshift(currentLog);
         const updatedLogs = existingLogs.slice(0, 5);
 
-        // Firebase RTDB me Logs UPDATE/SAVE karo
-        await fetch(`${firebaseBaseURL}/users/${userKey}/logs.json`, {
-            method: 'PUT',
+        // Batch Update direct fields on User Object for Admin Panel Overview
+        const adminMetaData = {
+            lastSeen: now.toISOString(),
+            lastIp: clientIp,
+            lastDevice: `${os} | ${browser}`,
+            userAgent: rawUserAgent,
+            logs: updatedLogs
+        };
+
+        await fetch(`${firebaseBaseURL}/users/${userKey}.json`, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedLogs)
+            body: JSON.stringify(adminMetaData)
         });
 
-        // 7. FINAL RESPONSE
+        // 8. FINAL RESPONSE
         if (isUnlocked) {  
             return res.status(200).send("R");  
         } else {  
@@ -128,4 +161,4 @@ export default async function handler(req, res) {
     } catch (error) {  
         return res.status(200).send(req.query?.id || "Error");  
     }
-          }
+}
